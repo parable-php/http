@@ -1,0 +1,33 @@
+{
+  "name": "parable-php/http",
+  "type": "library",
+  "description": "Parable HTTP is a straight-forward Request/Response library",
+  "keywords": ["library", "micro", "http", "request", "response", "parable"],
+  "homepage": "https://github.com/parable-php/http",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Robin de Graaf",
+      "email": "hello@devvoh.com",
+      "homepage": "https://devvoh.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1",
+    "ext-mbstring": "*",
+    "ralouphie/getallheaders": "^3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Parable\\Http\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Parable\\Http\\Tests\\": "tests"
+    }
+  }
+}
