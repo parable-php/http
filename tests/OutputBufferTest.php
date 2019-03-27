@@ -22,44 +22,44 @@ class OutputBufferTest extends \PHPUnit\Framework\TestCase
 
     public function testStartBuffers()
     {
-        self::assertFalse($this->bufferImplementation->isActive());
+        self::assertFalse($this->bufferImplementation->hasActiveOutputBuffer());
 
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
-        self::assertTrue($this->bufferImplementation->isActive());
+        self::assertTrue($this->bufferImplementation->hasActiveOutputBuffer());
     }
 
     public function testStartAndGetBuffers()
     {
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test';
 
-        $content = $this->bufferImplementation->get();
+        $content = $this->bufferImplementation->getOutputBuffer();
 
         self::assertSame('test', $content);
     }
 
     public function testGetBufferWithoutBeingActiveReturnsEmptyString()
     {
-        $content = $this->bufferImplementation->get();
+        $content = $this->bufferImplementation->getOutputBuffer();
 
         self::assertSame('', $content);
     }
 
     public function testStartAndGetMultipleBuffers()
     {
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test';
 
-        $content1 = $this->bufferImplementation->get();
+        $content1 = $this->bufferImplementation->getOutputBuffer();
 
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'again!';
 
-        $content2 = $this->bufferImplementation->get();
+        $content2 = $this->bufferImplementation->getOutputBuffer();
 
         self::assertSame('test', $content1);
         self::assertSame('again!', $content2);
@@ -67,72 +67,76 @@ class OutputBufferTest extends \PHPUnit\Framework\TestCase
 
     public function testStartMultipleAndGetAllBuffers()
     {
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test';
 
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo ' again!';
 
-        $content = $this->bufferImplementation->getAll();
+        $content = $this->bufferImplementation->getAllOutputBuffers();
 
         self::assertSame('test again!', $content);
     }
 
     public function testUndoOneLevel()
     {
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test';
 
-        $this->bufferImplementation->undo();
+        $this->bufferImplementation->startOutputBuffer();
 
-        self::assertSame('', $this->bufferImplementation->getAll());
+        echo 'test';
+
+        $this->bufferImplementation->undoOutputBuffer();
+
+        self::assertSame('test', $this->bufferImplementation->getAllOutputBuffers());
     }
 
     public function testUndoOneLevelOnMultipleLevelsOfBuffers()
     {
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test 1 ';
 
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test 2 ';
 
-        $this->bufferImplementation->undo();
+        $this->bufferImplementation->undoOutputBuffer();
 
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test 3';
 
-        self::assertSame('test 1 test 3', $this->bufferImplementation->getAll());
+        self::assertSame('test 1 test 3', $this->bufferImplementation->getAllOutputBuffers());
     }
 
     public function testUndoAllOnMultipleLevelsOfBuffers()
     {
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test 1 ';
 
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test 2 ';
 
-        $this->bufferImplementation->start();
+        $this->bufferImplementation->startOutputBuffer();
 
         echo 'test 3';
 
-        $this->bufferImplementation->undoAll();
+        $this->bufferImplementation->undoAllOutputBuffers();
 
-        self::assertSame('', $this->bufferImplementation->getAll());
+        self::assertSame('', $this->bufferImplementation->getAllOutputBuffers());
     }
 
     public function tearDown()
     {
         parent::tearDown();
 
-        $this->bufferImplementation->undoAll();
+        $this->bufferImplementation->undoAllOutputBuffers();
     }
 }

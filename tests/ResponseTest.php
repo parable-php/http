@@ -65,79 +65,73 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('5.0', $response->getProtocolVersion());
     }
 
-    public function testResponseCloningWithStatusCode()
+    public function testSetStatusCode()
     {
         $response = new Response(200, 'Hello.');
 
         self::assertSame(200, $response->getStatusCode());
 
-        $responseClone = $response->withStatusCode(404);
+        $response->setStatusCode(404);
 
-        self::assertSame(200, $response->getStatusCode());
-        self::assertSame(404, $responseClone->getStatusCode());
+        self::assertSame(404, $response->getStatusCode());
     }
 
-    public function testResponseCloningWithBody()
+    public function testSetBody()
     {
         $response = new Response(200, 'Hello,');
 
         self::assertSame('Hello,', $response->getBody());
 
-        $responseClone = $response->withBody('World!');
+        $response->setBody('World!');
 
-        self::assertSame('Hello,', $response->getBody());
-        self::assertSame('World!', $responseClone->getBody());
+        self::assertSame('World!', $response->getBody());
     }
 
-    public function testResponseCloningWithPrependedBody()
+    public function testSetPrependedBody()
     {
         $response = new Response(200, 'world!');
 
         self::assertSame('world!', $response->getBody());
 
-        $responseClone = $response->withPrependedBody('Hello, ');
+        $response->setPrependedBody('Hello, ');
 
-        self::assertSame('world!', $response->getBody());
-        self::assertSame('Hello, world!', $responseClone->getBody());
+        self::assertSame('Hello, world!', $response->getBody());
     }
 
-    public function testResponseCloningWithAppendedBody()
+    public function testSetAppendedBody()
     {
         $response = new Response(200, 'Hello,');
 
         self::assertSame('Hello,', $response->getBody());
 
-        $responseClone = $response->withAppendedBody(' world!');
+        $response->setAppendedBody(' world!');
 
-        self::assertSame('Hello,', $response->getBody());
-        self::assertSame('Hello, world!', $responseClone->getBody());
+        self::assertSame('Hello, world!', $response->getBody());
     }
 
-    public function testResponseCloningWithContentType()
+    public function testSetContentType()
     {
         $response = new Response(200, 'Hello.');
 
         self::assertSame('text/html', $response->getContentType());
 
-        $responseClone = $response->withContentType('application/json');
+        $response->setContentType('application/json');
 
-        self::assertSame('text/html', $response->getContentType());
-        self::assertSame('application/json', $responseClone->getContentType());
+        self::assertSame('application/json', $response->getContentType());
     }
 
-    public function testResponseCloningWithHeader()
+    public function testAddHeader()
     {
         $response = new Response(200, 'Hello.');
 
         self::assertNull($response->getHeader('TestHeader'));
 
-        $responseClone = $response->withHeader('TestHeader', 'set');
+        $response->addHeader('TestHeader', 'set');
 
-        self::assertNull($response->getHeader('TestHeader'));
-        self::assertSame('set', $responseClone->getHeader('TestHeader'));
+        self::assertSame('set', $response->getHeader('TestHeader'));
     }
 
-    public function testResponseCloningWithHeaders()
+    public function testAddHeaders()
     {
         $response = new Response(200, 'Hello.', 'text/html', ['TestHeader' => 'set']);
 
@@ -150,10 +144,25 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
             $response->getHeaders()
         );
 
-        $responseClone = $response->withHeaders([
+        $response->addHeaders([
             'OtherHeader' => 'now set',
         ]);
 
+        self::assertCount(3, $response->getHeaders());
+        self::assertSame(
+            [
+                'Content-Type' => 'text/html',
+                'TestHeader' => 'set',
+                'OtherHeader' => 'now set',
+            ],
+            $response->getHeaders()
+        );
+    }
+
+    public function testSetHeaders()
+    {
+        $response = new Response(200, 'Hello.', 'text/html', ['TestHeader' => 'set']);
+
         self::assertCount(2, $response->getHeaders());
         self::assertSame(
             [
@@ -163,48 +172,27 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
             $response->getHeaders()
         );
 
-        self::assertCount(2, $responseClone->getHeaders());
-        self::assertSame(
-            [
-                'Content-Type' => 'text/html',
-                'OtherHeader' => 'now set',
-            ],
-            $responseClone->getHeaders()
-        );
-    }
-
-    public function testResponseCloningWithAddedHeaders()
-    {
-        $response = new Response(200, 'Hello.', 'text/html', ['TestHeader' => 'set']);
-
-        self::assertCount(2, $response->getHeaders());
-
-        $responseClone = $response->withAddedHeaders([
-            'OtherHeader' => 'also set',
+        $response->setHeaders([
+            'OtherHeader' => 'now set',
         ]);
 
-        self::assertCount(2, $response->getHeaders());
-        self::assertCount(3, $responseClone->getHeaders());
-
+        self::assertCount(1, $response->getHeaders());
         self::assertSame(
             [
-                'Content-Type' => 'text/html',
-                'TestHeader' => 'set',
-                'OtherHeader' => 'also set',
+                'OtherHeader' => 'now set',
             ],
-            $responseClone->getHeaders()
+            $response->getHeaders()
         );
     }
 
-    public function testResponseCloningWithProtocol()
+    public function testSetProtocol()
     {
         $response = new Response(200, 'Hello.');
 
         self::assertSame('HTTP/1.1', $response->getProtocol());
 
-        $responseClone = $response->withProtocol('HTTP/2.0');
+        $response->setProtocol('HTTP/2.0');
 
-        self::assertSame('HTTP/1.1', $response->getProtocol());
-        self::assertSame('HTTP/2.0', $responseClone->getProtocol());
+        self::assertSame('HTTP/2.0', $response->getProtocol());
     }
 }

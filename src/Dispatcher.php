@@ -34,7 +34,7 @@ class Dispatcher
             ));
         }
 
-        $bufferedContent = $this->getAll();
+        $bufferedContent = $this->getAllOutputBuffers();
 
         echo $bufferedContent . $response->getBody();
 

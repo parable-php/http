@@ -2,7 +2,7 @@
 
 namespace Parable\Http\Traits;
 
-trait SupportsHeaders
+trait HasHeaders
 {
     /**
      * @var string[]
@@ -19,6 +19,9 @@ trait SupportsHeaders
         return $this->headers[$this->normalize($header)] ?? null;
     }
 
+    /**
+     * @return string[]
+     */
     public function getHeaders(): array
     {
         $headers = [];
@@ -32,29 +35,8 @@ trait SupportsHeaders
         return $headers;
     }
 
-    protected function setHeaders(array $headers): void
-    {
-        foreach ($headers as $header => $value) {
-            $this->setHeader($header, $value);
-        }
-    }
-
-    protected function setHeader(string $header, string $value): void
-    {
-        $normalized = $this->normalize($header);
-
-        $this->originalHeaders[$normalized] = $header;
-
-        $this->headers[$normalized] = $value;
-    }
-
     protected function normalize(string $value): string
     {
         return strtolower(trim($value));
-    }
-
-    protected function clearHeaders(): void
-    {
-        $this->headers = [];
     }
 }

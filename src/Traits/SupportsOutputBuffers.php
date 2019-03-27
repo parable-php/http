@@ -9,9 +9,9 @@ trait SupportsOutputBuffers
      */
     protected $level = 0;
 
-    public function get(): string
+    public function getOutputBuffer(): string
     {
-        if (!$this->isActive()) {
+        if (!$this->hasActiveOutputBuffer()) {
             return '';
         }
 
@@ -20,12 +20,12 @@ trait SupportsOutputBuffers
         return ob_get_clean();
     }
 
-    public function getAll(): string
+    public function getAllOutputBuffers(): string
     {
         $content = [];
 
-        while ($this->isActive()) {
-            $content[] = $this->get();
+        while ($this->hasActiveOutputBuffer()) {
+            $content[] = $this->getOutputBuffer();
         }
 
         $content = array_reverse($content);
@@ -33,23 +33,23 @@ trait SupportsOutputBuffers
         return implode($content);
     }
 
-    public function start(): void
+    public function startOutputBuffer(): void
     {
         ob_start();
         $this->level++;
     }
 
-    public function undo(): void
+    public function undoOutputBuffer(): void
     {
-        $this->get();
+        $this->getOutputBuffer();
     }
 
-    public function undoAll(): void
+    public function undoAllOutputBuffers(): void
     {
-        $this->getAll();
+        $this->getAllOutputBuffers();
     }
 
-    public function isActive(): bool
+    public function hasActiveOutputBuffer(): bool
     {
         return $this->level > 0;
     }

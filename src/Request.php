@@ -2,13 +2,13 @@
 
 namespace Parable\Http;
 
-use Parable\Http\Traits\SupportsHeaders;
+use Parable\Http\Traits\HasHeaders;
 
 class Request
 {
     protected const INPUT_SOURCE = 'php://input';
 
-    use SupportsHeaders;
+    use HasHeaders;
 
     protected $method;
     protected $uri;
@@ -25,7 +25,7 @@ class Request
         $this->uri = new Uri($uri);
         $this->protocol = $protocol;
 
-        $this->setHeaders($headers);
+        $this->addHeaders($headers);
     }
 
     public function getMethod(): string
@@ -84,5 +84,21 @@ class Request
     public function isMethod(string $method): bool
     {
         return $this->getMethod() === strtoupper($method);
+    }
+
+    protected function addHeaders(array $headers): void
+    {
+        foreach ($headers as $header => $value) {
+            $this->addHeader($header, $value);
+        }
+    }
+
+    protected function addHeader(string $header, string $value): void
+    {
+        $normalized = $this->normalize($header);
+
+        $this->originalHeaders[$normalized] = $header;
+
+        $this->headers[$normalized] = $value;
     }
 }

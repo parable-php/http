@@ -2,7 +2,7 @@
 
 namespace Parable\Http\Traits;
 
-trait SupportsStatusCode
+trait HasStatusCode
 {
     /**
      * @var int
@@ -76,7 +76,7 @@ trait SupportsStatusCode
         return $this->statusCodes[$this->statusCode] ?? null;
     }
 
-    protected function setStatusCode(int $statusCode): void
+    public function setStatusCode(int $statusCode): void
     {
         $this->statusCode = $statusCode;
     }

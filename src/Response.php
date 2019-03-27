@@ -2,13 +2,13 @@
 
 namespace Parable\Http;
 
-use Parable\Http\Traits\SupportsHeaders;
-use Parable\Http\Traits\SupportsStatusCode;
+use Parable\Http\Traits\HasHeaders;
+use Parable\Http\Traits\HasStatusCode;
 
 class Response
 {
-    use SupportsHeaders;
-    use SupportsStatusCode;
+    use HasHeaders;
+    use HasStatusCode;
 
     /**
      * @var string|null
@@ -30,9 +30,10 @@ class Response
         $this->body = $body;
         $this->protocol = $protocol;
 
-        $this->setHeader('Content-Type', $contentType);
+        $this->addHeader('Content-Type', $contentType);
+        $this->addHeaders($headers);
+
         $this->setStatusCode($statusCode);
-        $this->setHeaders($headers);
     }
 
     public function getBody(): ?string
@@ -56,71 +57,58 @@ class Response
         return end($parts);
     }
 
-    public function withStatusCode(int $value): self
+    public function setBody(string $body): void
     {
-        $clone = clone $this;
-        $clone->statusCode = $value;
-
-        return $clone;
+        $this->body = $body;
     }
 
-    public function withBody(string $value): self
+    public function setPrependedBody(string $content): void
     {
-        $clone = clone $this;
-        $clone->body = $value;
-
-        return $clone;
+        $this->body = $content . $this->body;
     }
 
-    public function withPrependedBody(string $value): self
+    public function setAppendedBody(string $content): void
     {
-        return $this->withBody($value . $this->getBody());
+        $this->body = $this->body . $content;
     }
 
-    public function withAppendedBody(string $value): self
+    public function setContentType(string $contentType): void
     {
-        return $this->withBody($this->getBody() . $value);
+        $this->addHeader('Content-Type', $contentType);
     }
 
-    public function withContentType(string $value): self
+    public function setHeaders(array $headers): void
     {
-        return $this->withHeader('Content-Type', $value);
+        $contentType = $this->getContentType();
+
+        $this->clearHeaders();
+        $this->addHeader('Content-Type', $contentType);
+        $this->addHeaders($headers);
     }
 
-    public function withHeader(string $header, string $value): self
+    public function setProtocol(string $protocol): void
     {
-        $clone = clone $this;
-        $clone->setHeader($header, $value);
-
-        return $clone;
+        $this->protocol = $protocol;
     }
 
-    public function withHeaders(array $headers): self
+    public function addHeaders(array $headers): void
     {
-        $clone = clone $this;
-        $clone->clearHeaders();
-        $clone->setHeader('Content-Type', $this->getContentType());
-        $clone->setHeaders($headers);
-
-        return $clone;
-    }
-
-    public function withAddedHeaders(array $headers): self
-    {
-        $clone = clone $this;
-
         foreach ($headers as $header => $value) {
-            $clone->setHeader($header, $value);
+            $this->addHeader($header, $value);
         }
-
-        return $clone;
     }
 
-    public function withProtocol(string $value): self
+    public function addHeader(string $header, string $value): void
     {
-        $clone = clone $this;
-        $clone->protocol = $value;
+        $normalized = $this->normalize($header);
 
-        return $clone;
+        $this->originalHeaders[$normalized] = $header;
+
+        $this->headers[$normalized] = $value;
+    }
+
+    protected function clearHeaders(): void
+    {
+        $this->headers = [];
     }
 }
