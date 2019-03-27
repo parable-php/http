@@ -52,7 +52,7 @@ us code `200`, with the body set as passed to the `Response` upon creation.
 
 ## API
 
-#### Request
+### Request
 
 - `getMethod(): string` - returns GET, POST, etc.
 - `getUri(): Uri` - return a `Uri` object representing the uri being requested
@@ -70,7 +70,7 @@ From the `HasHeaders` trait:
 - `getHeader(string $header): ?string` - get a single header by string, `null` if non-existing
 - `getHeaders(): string[]` - get all headers
 
-#### Response
+### Response
 
 - `getBody(): ?string` - the body to be sent
 - `setBody(string $body): void` - set the body as a string 
@@ -96,7 +96,7 @@ From the `HasStatusCode` trait:
 - `getStatusCodeText(): ?string` -  the status code text to be sent (i.e. `OK`)
 - `setStatusCode(int $statusCode): void` - set the status code 
 
-#### Dispatcher
+### Dispatcher
 
 - `dispatch(Response $response): void` - dispatch a Response, sending all its content as set
 - `dispatchAndTerminate(Response $response, int $exitCode = 0): void` - dispatch a Response and terminate, i.e., ending program flow immediately afterwards 
