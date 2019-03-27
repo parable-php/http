@@ -2,15 +2,15 @@
 
 namespace Parable\Http\Tests;
 
-use Parable\Http\Dispatcher;
+use Parable\Http\ResponseDispatcher;
 use Parable\Http\Exception;
 use Parable\Http\HeaderSender;
 use Parable\Http\Response;
 
-class DispatcherTest extends \PHPUnit\Framework\TestCase
+class ResponseDispatcherTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Dispatcher
+     * @var ResponseDispatcher
      */
     protected $dispatcher;
 
@@ -23,7 +23,7 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->dispatcher = $this->createPartialMock(Dispatcher::class, ['terminate']);
+        $this->dispatcher = $this->createPartialMock(ResponseDispatcher::class, ['terminate']);
 
         $this->dispatcher->method('terminate')->willReturnCallback(function (int $exitCode) {
             $this->lastExitCode = $exitCode;
@@ -51,7 +51,7 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
 
         $response = new Response(200, 'body');
 
-        $this->dispatcher->dispatch($response);
+        $this->dispatcher->dispatchAndTerminate($response);
 
         $headers = HeaderSender::list();
 
@@ -74,8 +74,6 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
 
         self::assertNull($this->lastExitCode);
 
-        $this->dispatcher->setShouldTerminate(false);
-
         $response = new Response(200, 'body');
 
         $this->dispatcher->dispatch($response);
@@ -94,8 +92,6 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
         HeaderSender::setTestMode(true);
 
         self::assertNull($this->lastExitCode);
-
-        $this->dispatcher->setShouldTerminate(false);
 
         $response = new Response(200, 'body');
 

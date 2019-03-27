@@ -4,14 +4,9 @@ namespace Parable\Http;
 
 use Parable\Http\Traits\SupportsOutputBuffers;
 
-class Dispatcher
+class ResponseDispatcher
 {
     use SupportsOutputBuffers;
-
-    /**
-     * @var bool
-     */
-    protected $shouldTerminate = true;
 
     public function dispatch(Response $response): void
     {
@@ -37,15 +32,6 @@ class Dispatcher
         $bufferedContent = $this->getAllOutputBuffers();
 
         echo $bufferedContent . $response->getBody();
-
-        if ($this->shouldTerminate) {
-            $this->terminate(0);
-        }
-    }
-
-    public function setShouldTerminate(bool $shouldTerminate): void
-    {
-        $this->shouldTerminate = $shouldTerminate;
     }
 
     public function dispatchAndTerminate(Response $response, int $exitCode = 0): void

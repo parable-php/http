@@ -41,9 +41,29 @@ class Response
         return $this->body;
     }
 
+    public function setBody(string $body): void
+    {
+        $this->body = $body;
+    }
+
+    public function prependBody(string $content): void
+    {
+        $this->body = $content . $this->body;
+    }
+
+    public function appendBody(string $content): void
+    {
+        $this->body = $this->body . $content;
+    }
+
     public function getContentType(): string
     {
         return $this->getHeader('Content-Type');
+    }
+
+    public function setContentType(string $contentType): void
+    {
+        $this->addHeader('Content-Type', $contentType);
     }
 
     public function getProtocol(): string
@@ -57,38 +77,19 @@ class Response
         return end($parts);
     }
 
-    public function setBody(string $body): void
+    public function setProtocol(string $protocol): void
     {
-        $this->body = $body;
-    }
-
-    public function setPrependedBody(string $content): void
-    {
-        $this->body = $content . $this->body;
-    }
-
-    public function setAppendedBody(string $content): void
-    {
-        $this->body = $this->body . $content;
-    }
-
-    public function setContentType(string $contentType): void
-    {
-        $this->addHeader('Content-Type', $contentType);
+        $this->protocol = $protocol;
     }
 
     public function setHeaders(array $headers): void
     {
         $contentType = $this->getContentType();
 
-        $this->clearHeaders();
+        $this->headers = [];
+
         $this->addHeader('Content-Type', $contentType);
         $this->addHeaders($headers);
-    }
-
-    public function setProtocol(string $protocol): void
-    {
-        $this->protocol = $protocol;
     }
 
     public function addHeaders(array $headers): void
@@ -103,12 +104,6 @@ class Response
         $normalized = $this->normalize($header);
 
         $this->originalHeaders[$normalized] = $header;
-
         $this->headers[$normalized] = $value;
-    }
-
-    protected function clearHeaders(): void
-    {
-        $this->headers = [];
     }
 }

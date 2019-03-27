@@ -6,9 +6,9 @@ use Parable\Http\Traits\HasHeaders;
 
 class Request
 {
-    protected const INPUT_SOURCE = 'php://input';
-
     use HasHeaders;
+
+    protected const INPUT_SOURCE = 'php://input';
 
     protected $method;
     protected $uri;

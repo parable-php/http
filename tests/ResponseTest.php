@@ -93,7 +93,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
 
         self::assertSame('world!', $response->getBody());
 
-        $response->setPrependedBody('Hello, ');
+        $response->prependBody('Hello, ');
 
         self::assertSame('Hello, world!', $response->getBody());
     }
@@ -104,7 +104,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
 
         self::assertSame('Hello,', $response->getBody());
 
-        $response->setAppendedBody(' world!');
+        $response->appendBody(' world!');
 
         self::assertSame('Hello, world!', $response->getBody());
     }
@@ -159,7 +159,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetHeaders()
+    public function testSetHeadersOverwritesAllButContentType()
     {
         $response = new Response(200, 'Hello.', 'text/html', ['TestHeader' => 'set']);
 
@@ -176,9 +176,10 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
             'OtherHeader' => 'now set',
         ]);
 
-        self::assertCount(1, $response->getHeaders());
+        self::assertCount(2, $response->getHeaders());
         self::assertSame(
             [
+                'Content-Type' => 'text/html',
                 'OtherHeader' => 'now set',
             ],
             $response->getHeaders()
