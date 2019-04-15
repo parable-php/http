@@ -1,5 +1,10 @@
 # Parable Http
 
+## 0.2.1
+
+_Changes_
+- `Uri` has gained 2 methods: `getUriBaseString()` and `getUriRestString`. Now it's easily possible to get the base uri, or only the path/query/fragment side of one. 
+
 ## 0.2.0
 
 _Changes_

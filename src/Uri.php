@@ -71,7 +71,67 @@ class Uri
 
     public function getUriString(): string
     {
-        return $this->__toString();
+        $restUri = $this->getUriRestString();
+
+        if (strlen($restUri) > 0 && !in_array(substr($restUri, 0, 1), ['?', '#'])) {
+            $restUri = '/' . $restUri;
+        }
+
+        return $this->getUriBaseString() . $restUri;
+    }
+
+    public function getUriBaseString(): string
+    {
+        $parts = [];
+
+        $parts[] = $this->getScheme();
+        $parts[] = '://';
+
+        if ($this->getUser() !== null) {
+            $parts[] = $this->getUser();
+
+            if ($this->getPass() !== null) {
+                $parts[] = ':';
+                $parts[] = $this->getPass();
+            }
+
+            $parts[] = '@';
+        }
+
+        $parts[] = $this->getHost();
+
+        // We need a port, but we ignore the defaults for http/https
+        if ($this->getPort() !== null
+            && (!$this->isHttps() && $this->getPort() !== 80
+                || $this->isHttps() && $this->getPort() !== 443
+            )
+        ) {
+            $parts[] = ':';
+            $parts[] = $this->getPort();
+        }
+
+        return implode($parts);
+    }
+
+    public function getUriRestString(): string
+    {
+        $parts = [];
+
+        if ($this->getPath() !== null) {
+            $parts[] = $this->getPath();
+        }
+
+        if ($this->getQuery() !== null) {
+            $parts[] = '?';
+            $parts[] = $this->getQuery();
+        }
+
+        if ($this->getFragment() !== null) {
+            $parts[] = '#';
+            $parts[] = $this->getFragment();
+        }
+
+        return implode($parts);
     }
 
     public function getScheme(): ?string
@@ -201,44 +261,6 @@ class Uri
 
     public function __toString(): string
     {
-        $parts = [];
-
-        $parts[] = $this->getScheme();
-        $parts[] = '://';
-
-        if ($this->getUser() !== null) {
-            $parts[] = $this->getUser();
-
-            if ($this->getPass() !== null) {
-                $parts[] = ':';
-                $parts[] = $this->getPass();
-            }
-
-            $parts[] = '@';
-        }
-
-        $parts[] = $this->getHost();
-
-        if ($this->getPort() !== null) {
-            $parts[] = ':';
-            $parts[] = $this->getPort();
-        }
-
-        if ($this->getPath() !== null) {
-            $parts[] = '/';
-            $parts[] = $this->getPath();
-        }
-
-        if ($this->getQuery() !== null) {
-            $parts[] = '?';
-            $parts[] = $this->getQuery();
-        }
-
-        if ($this->getFragment() !== null) {
-            $parts[] = '#';
-            $parts[] = $this->getFragment();
-        }
-
-        return implode($parts);
+        return $this->getUriString();
     }
 }

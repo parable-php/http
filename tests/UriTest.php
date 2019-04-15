@@ -18,9 +18,19 @@ class UriTest extends \PHPUnit\Framework\TestCase
         $this->uri = new Uri('https://user:pass@devvoh.com:1337/parable?doc=intro#yes');
     }
 
-    public function testGetUriBuildsTheRightUri()
+    public function testGetUriStringBuildsTheRightUri()
     {
         self::assertSame('https://user:pass@devvoh.com:1337/parable?doc=intro#yes', $this->uri->getUriString());
+    }
+
+    public function testGetUriBaseStringBuildsOnlyTheBase()
+    {
+        self::assertSame('https://user:pass@devvoh.com:1337', $this->uri->getUriBaseString());
+    }
+
+    public function testGetUriRestStringBuildsOnlyTheRest()
+    {
+        self::assertSame('parable?doc=intro#yes', $this->uri->getUriRestString());
     }
 
     public function testUriToString()
