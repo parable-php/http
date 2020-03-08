@@ -7,7 +7,6 @@ _Changes_
 - `Uri` also accepts an empty array in `withQueryArray()`
 - Urls generated now always have a `/` between query parts, fragments and the actual url.
 
-
 ## 0.2.1
 
 _Changes_
