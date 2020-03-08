@@ -3,8 +3,9 @@
 namespace Parable\Http\Tests;
 
 use Parable\Http\Uri;
+use PHPUnit\Framework\TestCase;
 
-class UriTest extends \PHPUnit\Framework\TestCase
+class UriTest extends TestCase
 {
     /**
      * @var string
@@ -18,62 +19,62 @@ class UriTest extends \PHPUnit\Framework\TestCase
         $this->uri = new Uri('https://user:pass@devvoh.com:1337/parable?doc=intro#yes');
     }
 
-    public function testGetUriStringBuildsTheRightUri()
+    public function testGetUriStringBuildsTheRightUri(): void
     {
         self::assertSame('https://user:pass@devvoh.com:1337/parable?doc=intro#yes', $this->uri->getUriString());
     }
 
-    public function testGetUriBaseStringBuildsOnlyTheBase()
+    public function testGetUriBaseStringBuildsOnlyTheBase(): void
     {
         self::assertSame('https://user:pass@devvoh.com:1337', $this->uri->getUriBaseString());
     }
 
-    public function testGetUriRestStringBuildsOnlyTheRest()
+    public function testGetUriRestStringBuildsOnlyTheRest(): void
     {
         self::assertSame('parable?doc=intro#yes', $this->uri->getUriRestString());
     }
 
-    public function testUriToString()
+    public function testUriToString(): void
     {
         self::assertSame('https://user:pass@devvoh.com:1337/parable?doc=intro#yes', (string)$this->uri);
     }
 
-    public function testGetScheme()
+    public function testGetScheme(): void
     {
         self::assertSame('https', $this->uri->getScheme());
     }
 
-    public function testGetUser()
+    public function testGetUser(): void
     {
         self::assertSame('user', $this->uri->getUser());
     }
 
-    public function testGetPass()
+    public function testGetPass(): void
     {
         self::assertSame('pass', $this->uri->getPass());
     }
 
-    public function testGetHost()
+    public function testGetHost(): void
     {
         self::assertSame('devvoh.com', $this->uri->getHost());
     }
 
-    public function testGetPort()
+    public function testGetPort(): void
     {
         self::assertSame(1337, $this->uri->getPort());
     }
 
-    public function testGetPath()
+    public function testGetPath(): void
     {
         self::assertSame('parable', $this->uri->getPath());
     }
 
-    public function testGetQuery()
+    public function testGetQuery(): void
     {
         self::assertSame('doc=intro', $this->uri->getQuery());
     }
 
-    public function testGetQueryArray()
+    public function testGetQueryArray(): void
     {
         self::assertSame(
             [
@@ -83,19 +84,19 @@ class UriTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testGetQueryArrayEmptyIfNoQuery()
+    public function testGetQueryArrayEmptyIfNoQuery(): void
     {
         $uri = new Uri('https://devvoh.com');
 
         self::assertSame([], $uri->getQueryArray());
     }
 
-    public function testGetFragment()
+    public function testGetFragment(): void
     {
         self::assertSame('yes', $this->uri->getFragment());
     }
 
-    public function testWithScheme()
+    public function testWithScheme(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -108,7 +109,7 @@ class UriTest extends \PHPUnit\Framework\TestCase
         self::assertSame('https://devvoh.com', (string)$uri);
     }
 
-    public function testWithUser()
+    public function testWithUser(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -121,7 +122,7 @@ class UriTest extends \PHPUnit\Framework\TestCase
         self::assertSame('http://user@devvoh.com', (string)$uri);
     }
 
-    public function testWithUserAndPass()
+    public function testWithUserAndPass(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -137,7 +138,7 @@ class UriTest extends \PHPUnit\Framework\TestCase
         self::assertSame('http://user:pass@devvoh.com', (string)$uri);
     }
 
-    public function testWithPassWithoutUser()
+    public function testWithPassWithoutUser(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -152,7 +153,7 @@ class UriTest extends \PHPUnit\Framework\TestCase
         self::assertSame('http://devvoh.com', (string)$uri);
     }
 
-    public function testWithHost()
+    public function testWithHost(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -165,7 +166,7 @@ class UriTest extends \PHPUnit\Framework\TestCase
         self::assertSame('http://github.com', (string)$uri);
     }
 
-    public function testWithPort()
+    public function testWithPort(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -178,7 +179,7 @@ class UriTest extends \PHPUnit\Framework\TestCase
         self::assertSame('http://devvoh.com:8080', (string)$uri);
     }
 
-    public function testWithPath()
+    public function testWithPath(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -191,7 +192,7 @@ class UriTest extends \PHPUnit\Framework\TestCase
         self::assertSame('http://devvoh.com/parable-doc', (string)$uri);
     }
 
-    public function testWithQuery()
+    public function testWithQuery(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -201,10 +202,10 @@ class UriTest extends \PHPUnit\Framework\TestCase
 
         self::assertSame('anything-goes-here', $uri->getQuery());
 
-        self::assertSame('http://devvoh.com?anything-goes-here', (string)$uri);
+        self::assertSame('http://devvoh.com/?anything-goes-here', (string)$uri);
     }
 
-    public function testWithQueryArray()
+    public function testWithQueryArray(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -216,10 +217,10 @@ class UriTest extends \PHPUnit\Framework\TestCase
 
         self::assertSame('test=true', $uri->getQuery());
 
-        self::assertSame('http://devvoh.com?test=true', (string)$uri);
+        self::assertSame('http://devvoh.com/?test=true', (string)$uri);
     }
 
-    public function testWithFragment()
+    public function testWithFragment(): void
     {
         $uri = new Uri('http://devvoh.com');
 
@@ -229,6 +230,41 @@ class UriTest extends \PHPUnit\Framework\TestCase
 
         self::assertSame('intro-here', $uri->getFragment());
 
-        self::assertSame('http://devvoh.com#intro-here', (string)$uri);
+        self::assertSame('http://devvoh.com/#intro-here', (string)$uri);
+    }
+
+    public function testWithPortNull(): void
+    {
+        self::assertSame('https://user:pass@devvoh.com/parable?doc=intro#yes', $this->uri->withPort(null)->getUriString());
+    }
+
+    public function testWithUserNull(): void
+    {
+        self::assertSame('https://devvoh.com:1337/parable?doc=intro#yes', $this->uri->withUser(null)->getUriString());
+    }
+
+    public function testWithPassNull(): void
+    {
+        self::assertSame('https://user@devvoh.com:1337/parable?doc=intro#yes', $this->uri->withPass(null)->getUriString());
+    }
+
+    public function testWithPathNull(): void
+    {
+        self::assertSame('https://user:pass@devvoh.com:1337/?doc=intro#yes', $this->uri->withPath(null)->getUriString());
+    }
+
+    public function testWithQueryNull(): void
+    {
+        self::assertSame('https://user:pass@devvoh.com:1337/parable#yes', $this->uri->withQuery(null)->getUriString());
+    }
+
+    public function testWithQueryArrayEmpty(): void
+    {
+        self::assertSame('https://user:pass@devvoh.com:1337/parable#yes', $this->uri->withQueryArray([])->getUriString());
+    }
+
+    public function testWithFragmentNull(): void
+    {
+        self::assertSame('https://user:pass@devvoh.com:1337/parable?doc=intro', $this->uri->withFragment(null)->getUriString());
     }
 }

@@ -74,10 +74,10 @@ class Uri
         $restUri = $this->getUriRestString();
 
         if (strlen($restUri) > 0 && !in_array(substr($restUri, 0, 1), ['?', '#'])) {
-            $restUri = '/' . $restUri;
+            $restUri = '/' . ltrim($restUri, '/');
         }
 
-        return $this->getUriBaseString() . $restUri;
+        return trim($this->getUriBaseString() . $restUri, '/');
     }
 
     public function getUriBaseString(): string
@@ -119,6 +119,8 @@ class Uri
 
         if ($this->getPath() !== null) {
             $parts[] = $this->getPath();
+        } else {
+            $parts[] = '/';
         }
 
         if ($this->getQuery() !== null) {
@@ -170,7 +172,7 @@ class Uri
         return $this->port;
     }
 
-    public function withPort(int $value): self
+    public function withPort(?int $value): self
     {
         $clone = clone $this;
         $clone->port = $value;
@@ -183,7 +185,7 @@ class Uri
         return $this->user;
     }
 
-    public function withUser(string $value): self
+    public function withUser(?string $value): self
     {
         $clone = clone $this;
         $clone->user = $value;
@@ -196,7 +198,7 @@ class Uri
         return $this->pass;
     }
 
-    public function withPass(string $value): self
+    public function withPass(?string $value): self
     {
         $clone = clone $this;
         $clone->pass = $value;
@@ -209,7 +211,7 @@ class Uri
         return $this->path ?? null;
     }
 
-    public function withPath(string $value): self
+    public function withPath(?string $value): self
     {
         $clone = clone $this;
         $clone->path = $value;
@@ -222,7 +224,7 @@ class Uri
         return $this->query;
     }
 
-    public function withQuery(string $value): self
+    public function withQuery(?string $value): self
     {
         $clone = clone $this;
         $clone->query = $value;
@@ -243,6 +245,10 @@ class Uri
 
     public function withQueryArray(array $values): self
     {
+        if ($values === []) {
+            return $this->withQuery(null);
+        }
+
         return $this->withQuery(http_build_query($values));
     }
 
@@ -251,7 +257,7 @@ class Uri
         return $this->fragment;
     }
 
-    public function withFragment(string $value): self
+    public function withFragment(?string $value): self
     {
         $clone = clone $this;
         $clone->fragment = $value;

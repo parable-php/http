@@ -1,9 +1,17 @@
 # Parable Http
 
+## 0.3.0
+
+_Changes_
+- `Uri` now accepts a `null` value on `withPort()`, `withUser()`, `withPass()`, `withPath()`, `withQuery()` and `withFragment()` to reset these values properly.
+- `Uri` also accepts an empty array in `withQueryArray()`
+- Urls generated now always have a `/` between query parts, fragments and the actual url.
+
+
 ## 0.2.1
 
 _Changes_
-- `Uri` has gained 2 methods: `getUriBaseString()` and `getUriRestString`. Now it's easily possible to get the base uri, or only the path/query/fragment side of one. 
+- `Uri` has gained 2 methods: `getUriBaseString()` and `getUriRestString`. Now it's easily possible to get the base uri, or only the path/query/fragment side of one.
 
 ## 0.2.0
 

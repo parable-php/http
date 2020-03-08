@@ -23,6 +23,7 @@ class HeaderSender
     {
         if (self::$testMode) {
             self::$headers[] = $header;
+
             return;
         }
 

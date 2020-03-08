@@ -3,8 +3,9 @@
 namespace Parable\Http\Tests;
 
 use Parable\Http\Traits\SupportsOutputBuffers;
+use PHPUnit\Framework\TestCase;
 
-class OutputBufferTest extends \PHPUnit\Framework\TestCase
+class OutputBufferTest extends TestCase
 {
     /**
      * @var SupportsOutputBuffers
@@ -20,7 +21,7 @@ class OutputBufferTest extends \PHPUnit\Framework\TestCase
         };
     }
 
-    public function testStartBuffers()
+    public function testStartBuffers(): void
     {
         self::assertFalse($this->bufferImplementation->hasActiveOutputBuffer());
 
@@ -29,7 +30,7 @@ class OutputBufferTest extends \PHPUnit\Framework\TestCase
         self::assertTrue($this->bufferImplementation->hasActiveOutputBuffer());
     }
 
-    public function testStartAndGetBuffers()
+    public function testStartAndGetBuffers(): void
     {
         $this->bufferImplementation->startOutputBuffer();
 
@@ -40,14 +41,14 @@ class OutputBufferTest extends \PHPUnit\Framework\TestCase
         self::assertSame('test', $content);
     }
 
-    public function testGetBufferWithoutBeingActiveReturnsEmptyString()
+    public function testGetBufferWithoutBeingActiveReturnsEmptyString(): void
     {
         $content = $this->bufferImplementation->getOutputBuffer();
 
         self::assertSame('', $content);
     }
 
-    public function testStartAndGetMultipleBuffers()
+    public function testStartAndGetMultipleBuffers(): void
     {
         $this->bufferImplementation->startOutputBuffer();
 
@@ -65,7 +66,7 @@ class OutputBufferTest extends \PHPUnit\Framework\TestCase
         self::assertSame('again!', $content2);
     }
 
-    public function testStartMultipleAndGetAllBuffers()
+    public function testStartMultipleAndGetAllBuffers(): void
     {
         $this->bufferImplementation->startOutputBuffer();
 
@@ -80,7 +81,7 @@ class OutputBufferTest extends \PHPUnit\Framework\TestCase
         self::assertSame('test again!', $content);
     }
 
-    public function testUndoOneLevel()
+    public function testUndoOneLevel(): void
     {
         $this->bufferImplementation->startOutputBuffer();
 
@@ -95,7 +96,7 @@ class OutputBufferTest extends \PHPUnit\Framework\TestCase
         self::assertSame('test', $this->bufferImplementation->getAllOutputBuffers());
     }
 
-    public function testUndoOneLevelOnMultipleLevelsOfBuffers()
+    public function testUndoOneLevelOnMultipleLevelsOfBuffers(): void
     {
         $this->bufferImplementation->startOutputBuffer();
 
@@ -114,7 +115,7 @@ class OutputBufferTest extends \PHPUnit\Framework\TestCase
         self::assertSame('test 1 test 3', $this->bufferImplementation->getAllOutputBuffers());
     }
 
-    public function testUndoAllOnMultipleLevelsOfBuffers()
+    public function testUndoAllOnMultipleLevelsOfBuffers(): void
     {
         $this->bufferImplementation->startOutputBuffer();
 

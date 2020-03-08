@@ -44,6 +44,7 @@ class RequestFactory
             $uri[] = $requestUri;
         }
 
+        // If any of the values are `null`, we don't have enough information to build a uri
         if (array_search(null, $uri) !== false) {
             return null;
         }

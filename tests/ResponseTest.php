@@ -3,10 +3,11 @@
 namespace Parable\Http\Tests;
 
 use Parable\Http\Response;
+use PHPUnit\Framework\TestCase;
 
-class ResponseTest extends \PHPUnit\Framework\TestCase
+class ResponseTest extends TestCase
 {
-    public function testSimple200ResponseWithDefaultValues()
+    public function testSimple200ResponseWithDefaultValues(): void
     {
         $response = new Response(200, 'Hello world.');
 
@@ -19,7 +20,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertNull($response->getHeader('test'));
     }
 
-    public function testResponseWithCustomStatusCode()
+    public function testResponseWithCustomStatusCode(): void
     {
         $response = new Response(418, 'Teapot, baby!');
 
@@ -28,7 +29,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('Teapot, baby!', $response->getBody());
     }
 
-    public function testResponseWithUnknownStatusCode()
+    public function testResponseWithUnknownStatusCode(): void
     {
         $response = new Response(10009, 'What the heck kinda status code is that?');
 
@@ -37,7 +38,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('What the heck kinda status code is that?', $response->getBody());
     }
 
-    public function testResponseWithCustomContentType()
+    public function testResponseWithCustomContentType(): void
     {
         $response = new Response(200, '{}', 'application/json');
 
@@ -45,7 +46,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('application/json', $response->getContentType());
     }
 
-    public function testResponseWithCustomHeaders()
+    public function testResponseWithCustomHeaders(): void
     {
         $headers = [
             'Content-Type' => 'application/json'
@@ -57,7 +58,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('application/json', $response->getContentType());
     }
 
-    public function testResponseWithCustomProtocol()
+    public function testResponseWithCustomProtocol(): void
     {
         $response = new Response(200, 'Hello.', 'text/html', [], 'HTTP/5.0');
 
@@ -65,7 +66,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('5.0', $response->getProtocolVersion());
     }
 
-    public function testSetStatusCode()
+    public function testSetStatusCode(): void
     {
         $response = new Response(200, 'Hello.');
 
@@ -76,7 +77,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame(404, $response->getStatusCode());
     }
 
-    public function testSetBody()
+    public function testSetBody(): void
     {
         $response = new Response(200, 'Hello,');
 
@@ -87,7 +88,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('World!', $response->getBody());
     }
 
-    public function testSetPrependedBody()
+    public function testSetPrependedBody(): void
     {
         $response = new Response(200, 'world!');
 
@@ -98,7 +99,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('Hello, world!', $response->getBody());
     }
 
-    public function testSetAppendedBody()
+    public function testSetAppendedBody(): void
     {
         $response = new Response(200, 'Hello,');
 
@@ -109,7 +110,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('Hello, world!', $response->getBody());
     }
 
-    public function testSetContentType()
+    public function testSetContentType(): void
     {
         $response = new Response(200, 'Hello.');
 
@@ -120,7 +121,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('application/json', $response->getContentType());
     }
 
-    public function testAddHeader()
+    public function testAddHeader(): void
     {
         $response = new Response(200, 'Hello.');
 
@@ -131,7 +132,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         self::assertSame('set', $response->getHeader('TestHeader'));
     }
 
-    public function testAddHeaders()
+    public function testAddHeaders(): void
     {
         $response = new Response(200, 'Hello.', 'text/html', ['TestHeader' => 'set']);
 
@@ -159,7 +160,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetHeadersOverwritesAllButContentType()
+    public function testSetHeadersOverwritesAllButContentType(): void
     {
         $response = new Response(200, 'Hello.', 'text/html', ['TestHeader' => 'set']);
 
@@ -186,7 +187,7 @@ class ResponseTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testSetProtocol()
+    public function testSetProtocol(): void
     {
         $response = new Response(200, 'Hello.');
 

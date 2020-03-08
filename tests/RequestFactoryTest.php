@@ -4,10 +4,11 @@ namespace Parable\Http\Tests;
 
 use Parable\Http\Exception;
 use Parable\Http\RequestFactory;
+use PHPUnit\Framework\TestCase;
 
-class RequestFactoryTest extends \PHPUnit\Framework\TestCase
+class RequestFactoryTest extends TestCase
 {
-    public function testCreateFromServerFailsIfAllDataIsMissing()
+    public function testCreateFromServerFailsIfAllDataIsMissing(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Could not build uri from $_SERVER array.');
@@ -15,7 +16,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         RequestFactory::createFromServer();
     }
 
-    public function testCreateFromServerIfHostIsGivenWithRestDefault()
+    public function testCreateFromServerIfHostIsGivenWithRestDefault(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 
@@ -28,7 +29,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertTrue($request->isMethod('GET'));
     }
 
-    public function testGetMethodUsesRequestMethod()
+    public function testGetMethodUsesRequestMethod(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 
@@ -41,7 +42,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertTrue((RequestFactory::createFromServer())->isMethod('POST'));
     }
 
-    public function testGetSchemeDerivesHttpsProperlyFromRequestScheme()
+    public function testGetSchemeDerivesHttpsProperlyFromRequestScheme(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 
@@ -52,7 +53,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertTrue((RequestFactory::createFromServer())->isHttps());
     }
 
-    public function testGetSchemeDerivesHttpsProperlyFromRedirectRequestScheme()
+    public function testGetSchemeDerivesHttpsProperlyFromRedirectRequestScheme(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 
@@ -63,7 +64,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertTrue((RequestFactory::createFromServer())->isHttps());
     }
 
-    public function testGetSchemeDerivesHttpsProperlyFromHttpsXForwardedProto()
+    public function testGetSchemeDerivesHttpsProperlyFromHttpsXForwardedProto(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 
@@ -74,7 +75,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertTrue((RequestFactory::createFromServer())->isHttps());
     }
 
-    public function testGetSchemeDerivesHttpsProperlyFromHttps()
+    public function testGetSchemeDerivesHttpsProperlyFromHttps(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 
@@ -85,7 +86,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertTrue((RequestFactory::createFromServer())->isHttps());
     }
 
-    public function testGetSchemeDerivesHttpsProperlyFromServerPort()
+    public function testGetSchemeDerivesHttpsProperlyFromServerPort(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 
@@ -96,7 +97,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertTrue((RequestFactory::createFromServer())->isHttps());
     }
 
-    public function testOnlyUserAuthPickedUpProperly()
+    public function testOnlyUserAuthPickedUpProperly(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 
@@ -114,7 +115,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertNull($request2->getPass());
     }
 
-    public function testAuthPicksUpUserAndPwProperly()
+    public function testAuthPicksUpUserAndPwProperly(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 
@@ -133,7 +134,7 @@ class RequestFactoryTest extends \PHPUnit\Framework\TestCase
         self::assertSame('password', $request2->getPass());
     }
 
-    public function testRequestUriPickedUpProperly()
+    public function testRequestUriPickedUpProperly(): void
     {
         $_SERVER['HTTP_HOST'] = 'test.dev';
 

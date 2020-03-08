@@ -6,8 +6,9 @@ use Parable\Http\ResponseDispatcher;
 use Parable\Http\Exception;
 use Parable\Http\HeaderSender;
 use Parable\Http\Response;
+use PHPUnit\Framework\TestCase;
 
-class ResponseDispatcherTest extends \PHPUnit\Framework\TestCase
+class ResponseDispatcherTest extends TestCase
 {
     /**
      * @var ResponseDispatcher
@@ -30,7 +31,7 @@ class ResponseDispatcherTest extends \PHPUnit\Framework\TestCase
         });
     }
 
-    public function testDispatchThrowsExceptionOnHeadersSent()
+    public function testDispatchThrowsExceptionOnHeadersSent(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Cannot dispatch response if headers already sent.');
@@ -40,7 +41,7 @@ class ResponseDispatcherTest extends \PHPUnit\Framework\TestCase
         $this->dispatcher->dispatch($response);
     }
 
-    public function testDispatchWorksIfNoHeadersSent()
+    public function testDispatchWorksIfNoHeadersSent(): void
     {
         ob_start();
 
@@ -65,7 +66,7 @@ class ResponseDispatcherTest extends \PHPUnit\Framework\TestCase
         self::assertSame(0, $this->lastExitCode);
     }
 
-    public function testDispatchDoesNotTerminateWhenToldNotTo()
+    public function testDispatchDoesNotTerminateWhenToldNotTo(): void
     {
         ob_start();
 
@@ -84,7 +85,7 @@ class ResponseDispatcherTest extends \PHPUnit\Framework\TestCase
         ob_get_clean();
     }
 
-    public function testDispatchAndTerminateIgnoresShouldTerminateSetting()
+    public function testDispatchAndTerminateIgnoresShouldTerminateSetting(): void
     {
         ob_start();
 
