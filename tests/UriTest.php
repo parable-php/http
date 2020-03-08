@@ -64,6 +64,20 @@ class UriTest extends TestCase
         self::assertSame(1337, $this->uri->getPort());
     }
 
+    public function testPortIsIgnoredWhenDefaultForSchemeHttp(): void
+    {
+        $uri = new Uri('http://devvoh.com:80');
+
+        self::assertSame('http://devvoh.com', $uri->getUriString());
+    }
+
+    public function testPortIsIgnoredWhenDefaultForSchemeHttps(): void
+    {
+        $uri = new Uri('https://devvoh.com:443');
+
+        self::assertSame('https://devvoh.com', $uri->getUriString());
+    }
+
     public function testGetPath(): void
     {
         self::assertSame('parable', $this->uri->getPath());

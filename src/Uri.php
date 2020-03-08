@@ -101,11 +101,7 @@ class Uri
         $parts[] = $this->getHost();
 
         // We need a port, but we ignore the defaults for http/https
-        if ($this->getPort() !== null
-            && (!$this->isHttps() && $this->getPort() !== 80
-                || $this->isHttps() && $this->getPort() !== 443
-            )
-        ) {
+        if ($this->getPort() !== null && !$this->isPortDefaultForScheme()) {
             $parts[] = ':';
             $parts[] = $this->getPort();
         }
@@ -268,5 +264,18 @@ class Uri
     public function __toString(): string
     {
         return $this->getUriString();
+    }
+
+    protected function isPortDefaultForScheme(): bool
+    {
+        if ($this->isHttps() && $this->getPort() === 443) {
+            return true;
+        }
+
+        if (!$this->isHttps() && $this->getPort() === 80) {
+            return true;
+        }
+
+        return false;
     }
 }
