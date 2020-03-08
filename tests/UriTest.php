@@ -68,6 +68,7 @@ class UriTest extends TestCase
     {
         $uri = new Uri('http://devvoh.com:80');
 
+        self::assertSame(80, $uri->getPort());
         self::assertSame('http://devvoh.com', $uri->getUriString());
     }
 
@@ -75,6 +76,7 @@ class UriTest extends TestCase
     {
         $uri = new Uri('https://devvoh.com:443');
 
+        self::assertSame(443, $uri->getPort());
         self::assertSame('https://devvoh.com', $uri->getUriString());
     }
 
