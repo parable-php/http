@@ -1,5 +1,9 @@
 # Parable Http
 
+## 0.3.1
+_Fixes_
+- `Uri` could not deal with double ports, i.e. `devvoh.com:8000:8000` and would set `devvoh.com:8000` as the host, causing issues. This is now fixed. The host is no longer allowed to have port numbers in it.
+
 ## 0.3.0
 
 _Changes_

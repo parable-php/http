@@ -62,6 +62,14 @@ class Uri
         $uri->query = $values['query'] ?? null;
         $uri->fragment = $values['fragment'] ?? null;
 
+        if ($uri->host !== null) {
+            $portPosition = strpos($uri->host, ':');
+
+            if ($portPosition !== false) {
+                $uri->host = substr_replace($uri->host, '', $portPosition);
+            }
+        }
+
         if ($uri->path !== null) {
             $uri->path = ltrim($uri->path, '/');
         }
@@ -73,7 +81,7 @@ class Uri
     {
         $restUri = $this->getUriRestString();
 
-        if (strlen($restUri) > 0 && !in_array(substr($restUri, 0, 1), ['?', '#'])) {
+        if (strlen($restUri) > 0 && !in_array($restUri[0], ['?', '#'])) {
             $restUri = '/' . ltrim($restUri, '/');
         }
 

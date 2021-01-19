@@ -80,6 +80,14 @@ class UriTest extends TestCase
         self::assertSame('https://devvoh.com', $uri->getUriString());
     }
 
+    public function testDoublePortIsFixed(): void
+    {
+        $uri = new Uri('https://devvoh.com:8000:8000');
+
+        self::assertSame(8000, $uri->getPort());
+        self::assertSame('https://devvoh.com:8000', $uri->getUriString());
+    }
+
     public function testGetPath(): void
     {
         self::assertSame('parable', $this->uri->getPath());
