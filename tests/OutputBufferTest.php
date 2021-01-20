@@ -7,12 +7,10 @@ use PHPUnit\Framework\TestCase;
 
 class OutputBufferTest extends TestCase
 {
-    /**
-     * @var SupportsOutputBuffers
-     */
+    /** @var SupportsOutputBuffers */
     protected $bufferImplementation;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -134,7 +132,7 @@ class OutputBufferTest extends TestCase
         self::assertSame('', $this->bufferImplementation->getAllOutputBuffers());
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

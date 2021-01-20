@@ -4,45 +4,14 @@ namespace Parable\Http;
 
 class Uri
 {
-    /**
-     * @var string|null
-     */
-    protected $scheme;
-
-    /**
-     * @var string|null
-     */
-    protected $user;
-
-    /**
-     * @var string|null
-     */
-    protected $pass;
-
-    /**
-     * @var string|null
-     */
-    protected $host;
-
-    /**
-     * @var int|null
-     */
-    protected $port;
-
-    /**
-     * @var string|null
-     */
-    protected $path;
-
-    /**
-     * @var string|null
-     */
-    protected $query;
-
-    /**
-     * @var string|null
-     */
-    protected $fragment;
+    protected ?string $scheme;
+    protected ?string $user;
+    protected ?string $pass;
+    protected ?string $host;
+    protected ?int $port;
+    protected ?string $path;
+    protected ?string $query;
+    protected ?string $fragment;
 
     public function __construct(string $uri)
     {
@@ -81,7 +50,7 @@ class Uri
     {
         $restUri = $this->getUriRestString();
 
-        if (strlen($restUri) > 0 && !in_array($restUri[0], ['?', '#'])) {
+        if ($restUri !== '' && !in_array($restUri[0], ['?', '#'])) {
             $restUri = '/' . ltrim($restUri, '/');
         }
 
@@ -276,14 +245,10 @@ class Uri
 
     protected function isPortDefaultForScheme(): bool
     {
-        if ($this->isHttps() && $this->getPort() === 443) {
-            return true;
+        if ($this->isHttps()) {
+            return $this->getPort() === 443;
         }
 
-        if (!$this->isHttps() && $this->getPort() === 80) {
-            return true;
-        }
-
-        return false;
+        return $this->getPort() === 80;
     }
 }

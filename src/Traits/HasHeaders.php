@@ -4,15 +4,11 @@ namespace Parable\Http\Traits;
 
 trait HasHeaders
 {
-    /**
-     * @var string[]
-     */
-    protected $headers = [];
+    /** @var string[] */
+    protected array $headers = [];
 
-    /**
-     * @var string[]
-     */
-    protected $originalHeaders = [];
+    /** @var string[] */
+    protected array $originalHeaders = [];
 
     public function getHeader(string $header): ?string
     {

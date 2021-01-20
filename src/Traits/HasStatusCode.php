@@ -4,15 +4,10 @@ namespace Parable\Http\Traits;
 
 trait HasStatusCode
 {
-    /**
-     * @var int
-     */
-    protected $statusCode = 200;
+    protected int $statusCode = 200;
 
-    /**
-     * @var string[]
-     */
-    protected $statusCodes = [
+    /** @var string[] */
+    protected array $statusCodes = [
         100 => "Continue",
         101 => "Switching Protocols",
         200 => "OK",

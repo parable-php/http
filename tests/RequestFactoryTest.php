@@ -145,7 +145,7 @@ class RequestFactoryTest extends TestCase
         self::assertSame('path/to/file', (RequestFactory::createFromServer())->getRequestUri());
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($_SERVER['HTTP_HOST']);
         unset($_SERVER['REQUEST_SCHEME']);

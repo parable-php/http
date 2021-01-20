@@ -10,15 +10,8 @@ class Response
     use HasHeaders;
     use HasStatusCode;
 
-    /**
-     * @var string|null
-     */
-    protected $body;
-
-    /**
-     * @var string
-     */
-    protected $protocol;
+    protected ?string $body;
+    protected string $protocol;
 
     public function __construct(
         int $statusCode = 200,
@@ -53,7 +46,7 @@ class Response
 
     public function appendBody(string $content): void
     {
-        $this->body = $this->body . $content;
+        $this->body .= $content;
     }
 
     public function getContentType(): string

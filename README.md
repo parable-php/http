@@ -1,6 +1,6 @@
 # Parable Http
 
-[![Build Status](https://travis-ci.org/parable-php/http.svg?branch=master)](https://travis-ci.org/parable-php/http)
+[![Build Status](https://travis-ci.com/parable-php/http.svg?branch=master)](https://travis-ci.com/parable-php/http)
 [![Latest Stable Version](https://poser.pugx.org/parable-php/http/v/stable)](https://packagist.org/packages/parable-php/http)
 [![Latest Unstable Version](https://poser.pugx.org/parable-php/http/v/unstable)](https://packagist.org/packages/parable-php/http)
 [![License](https://poser.pugx.org/parable-php/http/license)](https://packagist.org/packages/parable-php/http)
@@ -9,7 +9,7 @@ Parable Http is a minimalist Http library used to receive requests and send resp
 
 ## Install
 
-Php 7.1+ and [composer](https://getcomposer.org) are required.
+Php 8.0+ and [composer](https://getcomposer.org) are required.
 
 ```bash
 $ composer require parable-php/http

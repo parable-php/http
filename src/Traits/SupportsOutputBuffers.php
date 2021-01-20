@@ -4,10 +4,7 @@ namespace Parable\Http\Traits;
 
 trait SupportsOutputBuffers
 {
-    /**
-     * @var int
-     */
-    protected $level = 0;
+    protected int $level = 0;
 
     public function getOutputBuffer(): string
     {

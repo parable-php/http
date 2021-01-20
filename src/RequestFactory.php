@@ -45,7 +45,7 @@ class RequestFactory
         }
 
         // If any of the values are `null`, we don't have enough information to build a uri
-        if (array_search(null, $uri) !== false) {
+        if (in_array(null, $uri, true)) {
             return null;
         }
 
@@ -54,11 +54,7 @@ class RequestFactory
 
     protected static function getMethodFromServerArray(array $serverArray): string
     {
-        if (isset($serverArray['REQUEST_METHOD'])) {
-            return $serverArray['REQUEST_METHOD'];
-        }
-
-        return 'GET';
+        return $serverArray['REQUEST_METHOD'] ?? 'GET';
     }
 
     protected static function getSchemeFromServerArray(array $serverArray): string

@@ -10,10 +10,10 @@ class Request
 
     protected const INPUT_SOURCE = 'php://input';
 
-    protected $method;
-    protected $uri;
-    protected $protocol;
-    protected $body;
+    protected string $method;
+    protected Uri $uri;
+    protected string $protocol;
+    protected ?string $body = null;
 
     public function __construct(
         string $method,
@@ -58,7 +58,7 @@ class Request
         if ($this->body === null) {
             $body = file_get_contents(static::INPUT_SOURCE);
 
-            if (mb_strlen($body) > 0) {
+            if (!empty($body)) {
                 $this->body = trim($body);
             }
         }

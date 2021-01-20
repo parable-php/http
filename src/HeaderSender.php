@@ -4,15 +4,10 @@ namespace Parable\Http;
 
 class HeaderSender
 {
-    /**
-     * @var string[]
-     */
-    protected static $headers = [];
+    /** @var string[] */
+    protected static array $headers = [];
 
-    /**
-     * @var bool
-     */
-    protected static $testMode = false;
+    protected static bool $testMode = false;
 
     public static function setTestMode(bool $testMode): void
     {

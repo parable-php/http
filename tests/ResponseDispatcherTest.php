@@ -10,17 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 class ResponseDispatcherTest extends TestCase
 {
-    /**
-     * @var ResponseDispatcher
-     */
-    protected $dispatcher;
+    protected ResponseDispatcher $dispatcher;
+    protected ?int $lastExitCode = null;
 
-    /**
-     * @var null|int
-     */
-    protected $lastExitCode;
-
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -7,12 +7,9 @@ use PHPUnit\Framework\TestCase;
 
 class UriTest extends TestCase
 {
-    /**
-     * @var string
-     */
-    protected $uri;
+    protected Uri $uri;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
