@@ -1,5 +1,10 @@
 # Parable Http
 
+## 0.4.0
+
+_Changes_
+- Dropped support for php7, php8 only from now on.
+
 ## 0.3.1
 _Fixes_
 - `Uri` could not deal with double ports, i.e. `devvoh.com:8000:8000` and would set `devvoh.com:8000` as the host, causing issues. This is now fixed. The host is no longer allowed to have port numbers in it.
