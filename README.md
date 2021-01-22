@@ -1,6 +1,6 @@
 # Parable Http
 
-[![Build Status](https://travis-ci.com/parable-php/http.svg?branch=master)](https://travis-ci.com/parable-php/http)
+[![Workflow Status](https://github.com/parable-php/http/workflows/Tests/badge.svg)](https://github.com/parable-php/http/actions?query=workflow%3ATests)
 [![Latest Stable Version](https://poser.pugx.org/parable-php/http/v/stable)](https://packagist.org/packages/parable-php/http)
 [![Latest Unstable Version](https://poser.pugx.org/parable-php/http/v/unstable)](https://packagist.org/packages/parable-php/http)
 [![License](https://poser.pugx.org/parable-php/http/license)](https://packagist.org/packages/parable-php/http)
