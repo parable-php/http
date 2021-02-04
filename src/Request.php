@@ -16,16 +16,24 @@ class Request
     protected ?string $body = null;
 
     public function __construct(
-        string $method,
-        string $uri,
+        string $method = null,
+        string|Uri $uri = null,
         array $headers = [],
         string $protocol = 'HTTP/1.1'
     ) {
-        $this->method = strtoupper($method);
-        $this->uri = new Uri($uri);
-        $this->protocol = $protocol;
+        if ($method === null || $uri === null) {
+            [$method, $uri, $headers, $protocol] = RequestFactory::getValuesFromServer();
+        }
 
+        $this->method = strtoupper($method);
+        $this->protocol = $protocol;
         $this->addHeaders($headers);
+
+        if (!($uri instanceof Uri)) {
+            $uri = new Uri($uri);
+        }
+
+        $this->uri = $uri;
     }
 
     public function getMethod(): string

@@ -6,6 +6,11 @@ class RequestFactory
 {
     public static function createFromServer(): Request
     {
+        return new Request(...self::getValuesFromServer());
+    }
+
+    public static function getValuesFromServer(): array
+    {
         $method = self::getMethodFromServerArray($_SERVER);
         $uri = self::buildUriFromServerArray($_SERVER);
         $headers = getallheaders();
@@ -15,7 +20,7 @@ class RequestFactory
             throw new HttpException('Could not build uri from $_SERVER array.');
         }
 
-        return new Request($method, $uri->getUriString(), $headers, $protocol);
+        return [$method, $uri, $headers, $protocol];
     }
 
     protected static function buildUriFromServerArray(array $serverArray): ?Uri

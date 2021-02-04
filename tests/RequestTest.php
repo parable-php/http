@@ -7,6 +7,16 @@ use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase
 {
+    public function testIsPopulatedFromServerIfNoConstructorParametersPassed(): void
+    {
+        $_SERVER['HTTP_HOST'] = 'test.dev';
+
+        $request = new Request();
+
+        self::assertSame('GET', $request->getMethod());
+        self::assertSame('http://test.dev', $request->getUri()->__toString());
+    }
+
     public function testGetUri(): void
     {
         $request = new Request('GET', 'http://test.dev/folder/being/requested');

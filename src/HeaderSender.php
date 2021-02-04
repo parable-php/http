@@ -16,7 +16,7 @@ class HeaderSender
 
     public static function send(string $header): void
     {
-        if (self::$testMode) {
+        if (self::$testMode === true) {
             self::$headers[] = $header;
 
             return;
@@ -27,7 +27,7 @@ class HeaderSender
 
     public static function alreadySent(): bool
     {
-        if (self::$testMode) {
+        if (self::$testMode === true) {
             return false;
         }
 
@@ -36,7 +36,7 @@ class HeaderSender
 
     public static function list(): array
     {
-        if (self::$testMode) {
+        if (self::$testMode === true) {
             return self::$headers;
         }
 
