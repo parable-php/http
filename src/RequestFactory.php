@@ -12,7 +12,7 @@ class RequestFactory
         $protocol = self::getProtocolFromServerArray($_SERVER);
 
         if ($uri === null) {
-            throw new Exception('Could not build uri from $_SERVER array.');
+            throw new HttpException('Could not build uri from $_SERVER array.');
         }
 
         return new Request($method, $uri->getUriString(), $headers, $protocol);

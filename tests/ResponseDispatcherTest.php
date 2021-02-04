@@ -3,7 +3,7 @@
 namespace Parable\Http\Tests;
 
 use Parable\Http\ResponseDispatcher;
-use Parable\Http\Exception;
+use Parable\Http\HttpException;
 use Parable\Http\HeaderSender;
 use Parable\Http\Response;
 use PHPUnit\Framework\TestCase;
@@ -26,12 +26,12 @@ class ResponseDispatcherTest extends TestCase
 
     public function testDispatchThrowsExceptionOnHeadersSent(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(HttpException::class);
         $this->expectExceptionMessage('Cannot dispatch response if headers already sent.');
 
         $response = new Response(200, 'body');
 
-        $this->dispatcher->dispatch($response);
+        $this->dispatcher->dispatchWithoutTerminate($response);
     }
 
     public function testDispatchWorksIfNoHeadersSent(): void
@@ -45,7 +45,7 @@ class ResponseDispatcherTest extends TestCase
 
         $response = new Response(200, 'body');
 
-        $this->dispatcher->dispatchAndTerminate($response);
+        $this->dispatcher->dispatch($response);
 
         $headers = HeaderSender::list();
 
@@ -70,7 +70,7 @@ class ResponseDispatcherTest extends TestCase
 
         $response = new Response(200, 'body');
 
-        $this->dispatcher->dispatch($response);
+        $this->dispatcher->dispatchWithoutTerminate($response);
 
         self::assertNull($this->lastExitCode);
 
@@ -78,20 +78,17 @@ class ResponseDispatcherTest extends TestCase
         ob_get_clean();
     }
 
-    public function testDispatchAndTerminateIgnoresShouldTerminateSetting(): void
+    public function testDispatchTerminates(): void
     {
         ob_start();
-
-        // Setting the HeaderSender to test mode will not send headers but store them instead
-        HeaderSender::setTestMode(true);
 
         self::assertNull($this->lastExitCode);
 
         $response = new Response(200, 'body');
 
-        $this->dispatcher->dispatchAndTerminate($response);
+        $this->dispatcher->dispatch($response, 4);
 
-        self::assertSame(0, $this->lastExitCode);
+        self::assertSame(4, $this->lastExitCode);
 
         // We need to clean the output from the dispatched Response
         ob_get_clean();

@@ -1,5 +1,11 @@
 # Parable Http
 
+## 0.5.0
+
+_Changes_
+- `dispatch` now terminates by default, `dispatchAndTerminate` has been removed, and `dispatchWithoutTerminate` has been added.
+- `Parable\Http\Exception` has been renamed to `Parable\Http\HttpException` for clearer usage.
+
 ## 0.4.0
 
 _Changes_

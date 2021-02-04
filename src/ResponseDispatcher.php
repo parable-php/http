@@ -8,10 +8,16 @@ class ResponseDispatcher
 {
     use SupportsOutputBuffers;
 
-    public function dispatch(Response $response): void
+    public function dispatch(Response $response, int $exitCode = 0): void
+    {
+        $this->dispatchWithoutTerminate($response);
+        $this->terminate($exitCode);
+    }
+
+    public function dispatchWithoutTerminate(Response $response): void
     {
         if (HeaderSender::alreadySent()) {
-            throw new Exception('Cannot dispatch response if headers already sent.');
+            throw new HttpException('Cannot dispatch response if headers already sent.');
         }
 
         HeaderSender::send(sprintf(
@@ -32,12 +38,6 @@ class ResponseDispatcher
         $bufferedContent = $this->getAllOutputBuffers();
 
         echo $bufferedContent . $response->getBody();
-    }
-
-    public function dispatchAndTerminate(Response $response, int $exitCode = 0): void
-    {
-        $this->dispatch($response);
-        $this->terminate($exitCode);
     }
 
     /**

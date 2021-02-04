@@ -2,7 +2,7 @@
 
 namespace Parable\Http\Tests;
 
-use Parable\Http\Exception;
+use Parable\Http\HttpException;
 use Parable\Http\RequestFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -10,7 +10,7 @@ class RequestFactoryTest extends TestCase
 {
     public function testCreateFromServerFailsIfAllDataIsMissing(): void
     {
-        $this->expectException(Exception::class);
+        $this->expectException(HttpException::class);
         $this->expectExceptionMessage('Could not build uri from $_SERVER array.');
 
         RequestFactory::createFromServer();

@@ -2,6 +2,6 @@
 
 namespace Parable\Http;
 
-class Exception extends \Exception
+class HttpException extends \Exception
 {
 }
