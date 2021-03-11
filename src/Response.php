@@ -51,7 +51,7 @@ class Response
 
     public function getContentType(): string
     {
-        return $this->getHeader('Content-Type');
+        return $this->getHeader('Content-Type') ?? 'text/html';
     }
 
     public function setContentType(string $contentType): void
@@ -61,7 +61,7 @@ class Response
 
     public function getProtocol(): string
     {
-        return $this->protocol ?? 'HTTP/1.1';
+        return $this->protocol;
     }
 
     public function getProtocolVersion(): string

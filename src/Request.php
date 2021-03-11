@@ -53,7 +53,7 @@ class Request
 
     public function getProtocol(): string
     {
-        return $this->protocol ?? 'HTTP/1.1';
+        return $this->protocol;
     }
 
     public function getProtocolVersion(): string

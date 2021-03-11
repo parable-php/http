@@ -1,9 +1,14 @@
 # Parable Http
 
+## 0.5.2
+
+_Changes_
+- Added static analysis through psalm.
+
 ## 0.5.1
 
 _Changes_
-- `Request` can now be instantiated without passing all values, in which cases it will set itself up by using `RequestFactory::getValuesFromServer`. 
+- `Request` can now be instantiated without passing all values, in which cases it will set itself up by using `RequestFactory::getValuesFromServer`.
 
 ## 0.5.0
 
