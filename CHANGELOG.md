@@ -1,5 +1,9 @@
 # Parable Http
 
+## 1.0.0
+
+Just a re-release locking the interface in place. First final release!
+
 ## 0.5.2
 
 _Changes_
