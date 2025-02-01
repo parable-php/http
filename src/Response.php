@@ -15,7 +15,7 @@ class Response
 
     public function __construct(
         int $statusCode = 200,
-        string $body = null,
+        ?string $body = null,
         string $contentType = 'text/html',
         array $headers = [],
         string $protocol = 'HTTP/1.1'
