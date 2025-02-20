@@ -16,8 +16,8 @@ class Request
     protected ?string $body = null;
 
     public function __construct(
-        string $method = null,
-        string|Uri $uri = null,
+        ?string $method = null,
+        null|string|Uri $uri = null,
         array $headers = [],
         string $protocol = 'HTTP/1.1'
     ) {
